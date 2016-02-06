@@ -1,5 +1,16 @@
 // MAIN GAME FILE
+// game.ts 
+// Derek Wong
+// Last Modified By: Derek Wong
+// Date Last Modified: 2/5/2016
+// Displays the game objects
+/*Revision History
+  2/3/2016- Created Cube man body
+  2/4/2016 - Added Parent Cube to hold Child Cube
+  2/5/2016 - Added dat-gui controls
+*/
 
+//import
 import Scene = THREE.Scene;
 import Renderer = THREE.WebGLRenderer;
 import PerspectiveCamera = THREE.PerspectiveCamera;
@@ -17,6 +28,7 @@ import GUI = dat.GUI;
 import Color = THREE.Color;
 import Vector3 = THREE.Vector3;
 
+//Define attributes
 var scene: Scene;
 var renderer: Renderer;
 var camera: PerspectiveCamera;
@@ -34,6 +46,7 @@ var group: Mesh;
 var sphere: Mesh;
 var spotLight: SpotLight;
 
+// Initialize Control 
 var control: Control;
 var gui: GUI;
 var stats:Stats;
@@ -58,16 +71,16 @@ function init() {
 	planeMaterial = new LambertMaterial({color:0xFFFFFF});
 	plane = new Mesh(planeGeometry, planeMaterial);
 	plane.receiveShadow = true;
-	
 	plane.rotation.x = -0.5 * Math.PI;
     plane.position.x = 10;
 	plane.position.y = 0;
     plane.position.z = 0;
-	
 	scene.add(plane);
-	console.log("Added Plane Primitive to scene...");
-    parentCube = new Mesh();
-     //torso 
+    
+    //Add a parent cube to hold children cubes 
+	parentCube = new Mesh();
+    //Child Cube
+    //Cube man's torso 
 	cubeGeometry = new BoxGeometry(4, 6, 8);
 	cubeMaterial = new LambertMaterial({color:0xff0000});
 	cube = new Mesh(cubeGeometry, cubeMaterial);    
@@ -78,8 +91,8 @@ function init() {
     parentCube.add(cube);
    
     
-	console.log("Added ParentCube Primitive to scene...");
-     //head 
+	//Child Cube
+    //Cube Man's head 
 	cubeGeometry = new BoxGeometry(2, 6, 2);
 	cubeMaterial = new LambertMaterial({color:0x7f0000});
 	cube = new Mesh(cubeGeometry, cubeMaterial);    
@@ -89,9 +102,9 @@ function init() {
     cube.position.z = 2.5;
     parentCube.add(cube);
     
-    console.log("Added head Primitive to scene...");
-    
-    //left arm 
+        
+    //Child Cube
+    //Cube man's left arm 
 	cubeGeometry = new BoxGeometry(1, 1, 8);
 	cubeMaterial = new LambertMaterial({color:0xff0000});
 	cube = new Mesh(cubeGeometry, cubeMaterial);    
@@ -101,9 +114,8 @@ function init() {
     cube.position.z = -0.5;
     parentCube.add(cube);
     
-	console.log("Added Cube Primitive to scene...");
-    
-    //right arm 
+	//Child Cube    
+    //Cube man's right arm 
 	cubeGeometry = new BoxGeometry(1, 1, 8);
 	cubeMaterial = new LambertMaterial({color:0xff0000});
 	cube = new Mesh(cubeGeometry, cubeMaterial);    
@@ -113,11 +125,10 @@ function init() {
     cube.position.z = 5.5;
     parentCube.add(cube);
     
-	console.log("Added Cube Primitive to scene...");
-    
+	  
    
-    
-    //left leg
+    //Child Cube
+    //Cube man's left leg
 	cubeGeometry = new BoxGeometry(3, 10, 2);
 	cubeMaterial = new LambertMaterial({color:0x651818});
 	cube = new Mesh(cubeGeometry, cubeMaterial);    
@@ -129,9 +140,9 @@ function init() {
     
 	parentCube.add(cube);
     
-	console.log("Added Cube Primitive to scene...");
-    
-     //right leg
+	
+    // Child Cube
+    // Cube man's right leg
 	cubeGeometry = new BoxGeometry(3, 10, 2);
 	cubeMaterial = new LambertMaterial({color:0x651818});
 	cube = new Mesh(cubeGeometry, cubeMaterial);    
@@ -156,7 +167,8 @@ function init() {
     //Add Ambient Light to the scene
     var light = new THREE.AmbientLight( 0x404040 ); 
     scene.add( light );
-    // add controls
+    
+    // Initialize GUI controls
 	gui = new GUI();
 	control = new Control(0,0,0);
 	addControl(control);
@@ -168,12 +180,14 @@ function init() {
 	gameLoop(); // render the scene	
 }
 
+// Add control to scene
 function addControl(controlObject: Control):void {
 	gui.add(controlObject, 'rotateXAxis', 0, 1);
 	gui.add(controlObject, 'rotateYAxis', 0, 1);
     gui.add(controlObject, 'rotateZAxis', 0, 1);
 }
 
+// Add Stats to scene
 function addStatsObject() {
 	stats = new Stats();
 	stats.setMode(0);
@@ -187,16 +201,16 @@ function addStatsObject() {
 function gameLoop():void {
 	stats.update();
 	
-    // //animate cube
+    //animate Parent Cube in x, y ,z axis
      parentCube.rotation.x += control.rotateXAxis*15;
      parentCube.rotation.y += control.rotateYAxis*15;
      parentCube.rotation.z += control.rotateZAxis*15;
     
        
-	// render using requestAnimationFrame
+	
 	requestAnimationFrame(gameLoop);
 	
-    // render the scene
+    
 	renderer.render(scene, camera);
 }
 
@@ -206,7 +220,7 @@ function setupRenderer():void {
 	renderer.setClearColor(0xEEEEEE, 1.0);
 	renderer.setSize(window.innerWidth, window.innerHeight);
 	renderer.shadowMapEnabled = true;
-	console.log("Finished setting up Renderer...");
+	
 }
 
 // Setup main camera for the scene
@@ -216,5 +230,5 @@ function setupCamera():void {
 	camera.position.y = 40;
 	camera.position.z = 30;
 	camera.lookAt(scene.position);
-	console.log("Finished setting up Camera...");
+	
 }

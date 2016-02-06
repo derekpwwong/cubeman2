@@ -1,20 +1,20 @@
 {
-  "name": "comp392lesson01-part2",
+  "name": "Assignment 1 Cube Man",
   "authors": [
-    "Tom Tsiliopoulos <tsiliopoulos@hotmail.com>"
+    "Derek Wong"
   ],
-  "description": "COMP392Lesson01-Part1 for Advanced Graphics",
+  "description": "Cube Man ",
   "main": "",
   "moduleType": [],
   "license": "MIT",
-  "homepage": "http://github.com/CentennialCollege/COMP392-Lesson01-Part2",
+  "homepage": "https://github.com/derekpwwong/cube-man",
   "ignore": [
     "**/.*",
     "node_modules",
     "bower_components",
     "test",
-    "tests",
-    "Scripts/lib"
+    "tests"
+    
   ],
   "dependencies": {
     "three.js": "~0.72.0",
